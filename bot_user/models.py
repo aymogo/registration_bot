@@ -1,7 +1,7 @@
 from django.db import models
 
 class User(models.Model):
-    user_id = models.BigAutoField(primary_key=True)
+    user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
     surname = models.CharField(max_length=128)
 
@@ -18,7 +18,7 @@ class User(models.Model):
         return f'{self.name} {self.surname} id={self.user_id}'
 
 class Tguser(models.Model):
-    user_id = models.BigAutoField(primary_key=True)
+    user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
     surname = models.CharField(max_length=128)
 
@@ -27,7 +27,7 @@ class Tguser(models.Model):
     voice = models.CharField(max_length=128)
     document = models.CharField(max_length=128)
 
-    location = models.JSONField(null=True)
+    location = models.JSONField(null=True, blank=True)
     contact = models.CharField(max_length=16)
 
 
