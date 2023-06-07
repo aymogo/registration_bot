@@ -41,9 +41,6 @@ def secret_level(update: Update, context: CallbackContext) -> None:
         parse_mode=ParseMode.HTML
     )
 
-"""             user detail begin             """
-"""             user detail begin             """
-"""             user detail begin             """
 
 def registration(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(text="Send your name please")
@@ -55,7 +52,7 @@ def user_name(update: Update, context: CallbackContext) -> None:
     context.user_data["name"] = text
     update.message.reply_text(text="Send your lastname please")
 
-    return SURNAME
+    return CONTACT
     
 def user_surname(update: Update, context: CallbackContext) -> None:
     text = update.message.text
@@ -65,62 +62,60 @@ def user_surname(update: Update, context: CallbackContext) -> None:
     return PHOTO
 
 def user_photo(update: Update, context: CallbackContext) -> None:
-    image = update.message.photo[-1].get_file()
-    image_name = context.user_data["user_image_name"] = f'user_photo_{context.user_data["name"]}.jpg'
-    image.download(f"media/photo/{image_name}")
+    image = update.message.photo[-1]
+    context.user_data["photo"] = image.file_id
 
-    update.message.reply_text(text="Send your video please")
+    update.message.reply_photo(photo=image.file_id, caption="I gotcha!\nSend your video please")
 
     return  VIDEO
 
 def user_video(update: Update, context: CallbackContext) -> None:
     video = update.message.video
-    video_name = context.user_data["video_name"] = f'user_video_{context.user_data["name"]}.mp4'
-    video.download(f"media/video/{video_name}")
+    context.user_data["video"] = video.file_id
 
-    update.message.reply_text(text="Send your voice please")
+    update.message.reply_video(video=video, caption="I gotcha!\nSend your voice pleace")
 
     return VOICE
 
 def user_voice(update: Update, context: CallbackContext) -> None:
     voice = update.message.voice
-    voice_name = context.user_data["voice_name"] = f'user_voice_{context.user_data["name"]}.mp3'
-    voice.download(f"media/voice/{voice_name}")
+    context.user_data["voice"] = voice.file_id
 
-    update.message.reply_text(text="Send your document please")
+    update.message.reply_voice(voice=context.user_data["voice"], caption="I gotcha!\nSend your document please")
 
     return DOCUMENT
 
 def user_document(update: Update, context: CallbackContext) -> None:
     document = update.message.document
-    document_name = context.user_data["document_name"] = f'user_document_{context.user_data["name"]}.mp3'
-    document.download(f"media/document/{document_name}")
+    context.user_data["document"] = document.file_id
 
-    update.message.reply_text(text="Send your location please")
+    update.message.reply_document(document=document, caption="I gotcha!\nSend your location please")
+
 
     return LOCATION
 
 def user_location(update: Update, context: CallbackContext) -> None:
     location = update.message.location
-    location_name = context.user_data["location_name"] = f'user_location_{context.user_data["name"]}.mp3'
-    location.download(f"media/location/{location_name}")
+    context.user_data["location"] = {
+        "latitude": location.latitude,
+        "longitude": location.longitude,
+    }
     
-    update.message.reply_text(text="Send your contact please")
+    update.message.reply_location(location=location)
+    update.message.reply_text(text="I gotcha!\nSend your contact please")
 
     return CONTACT
 
 def user_contact(update: Update, context: CallbackContext) -> None:
     contact = update.message.contact
-    contact_name = context.user_data["contact_name"] = f'user_contact_{context.user_data["name"]}.mp3'
-    contact.download(f"media/contact/{contact_name}")
+    context.user_data["contact"] = contact.phone_number
 
-    update.message.reply_text(text="Congratulations you're successfully registered!!!")
+    update.message.reply_contact(contact=contact)
+    update.message.reply_text(text="Well done. You are registered!!!")
 
     return ConversationHandler.END
 
 def cancel(update: Update, context: CallbackContext) -> None:
     pass
 
-"""             user detail end             """
-"""             user detail end             """
 """             user detail end             """

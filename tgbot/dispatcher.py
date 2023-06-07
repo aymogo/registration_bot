@@ -36,7 +36,7 @@ def setup_dispatcher(dp):
     dp.add_handler(CommandHandler('export_users', admin_handlers.export_users))
     
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('registration', onboarding_handlers.registration)],
+        entry_points=[CommandHandler('registration', onboarding_handlers.registration   )],
         states={
             NAME: [
                 MessageHandler(Filters.text, onboarding_handlers.user_name)
@@ -54,7 +54,7 @@ def setup_dispatcher(dp):
                 MessageHandler(Filters.voice, onboarding_handlers.user_voice)
             ],
             DOCUMENT: [
-                MessageHandler(Filters.document, onboarding_handlers.user_voice)
+                MessageHandler(Filters.document, onboarding_handlers.user_document)
             ],
             LOCATION: [
                 MessageHandler(Filters.location, onboarding_handlers.user_location)
